@@ -1,0 +1,6 @@
+<ul class="collection with-header">
+	<li class="collection-header island-name">{{island.name}}</li>
+	{{#each island.spots as |spot|}}
+		{{spot-detail spot=spot}}
+	{{/each}}
+</ul>

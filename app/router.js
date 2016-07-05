@@ -6,6 +6,11 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('fishing', function() {
+    this.route('index', { path: '/' });
+    this.route('locations');
+  });
+  this.route('about');
 });
 
 export default Router;
