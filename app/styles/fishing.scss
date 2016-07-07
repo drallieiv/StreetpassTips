@@ -47,7 +47,7 @@ $deep:  #582e02;
 }
 
 .star{
-	height:20px;
+	height:21px;
 	width:60px;
 	display:block;
 
@@ -60,4 +60,32 @@ $deep:  #582e02;
 	&.star3{
 		background-image: url("icons/star3.png");
 	}
+}
+
+.baitDetail{
+
+	display: table;
+	//border-collapse:collapse;
+  border-spacing: 2px 0;
+
+	// Center
+	margin: 0 auto 0 auto;
+
+
+	.baitRow{
+		display:table-row;
+	}
+	.baitCube{
+		border: 1px solid grey;
+		width: 18px;
+		height: 18px;
+		display: table-cell;
+    box-sizing: content-box;
+
+		&[active=false]{
+			//opacity: 0.3;
+			visibility: hidden;
+		}
+	}
+
 }

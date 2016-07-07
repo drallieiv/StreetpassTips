@@ -1,23 +1,8 @@
 <li class="collection-item spot" spot-type="{{spot.type}}">
   <span class="spot-name">{{spot.name}}</span>
   <div class="fishList">
-    <div class="row fish">
-      <div class="col s2">One Star Fish</div>
-      <div class="col s2">
-        <span class="star star1"></span>
-      </div>
-    </div>
-    <div class="row fish">
-      <div class="col s2">Two Star Fish</div>
-      <div class="col s2">
-        <span class="star star2"></span>
-      </div>
-    </div>
-    <div class="row fish">
-      <div class="col s2">Three Star Fish</div>
-      <div class="col s2">
-        <span class="star star3"></span>
-      </div>
-    </div>
+    {{#each spot.fish as |fish|}}
+  		{{fish-detail fish=fish}}
+  	{{/each}}
   </div>
 </li>
