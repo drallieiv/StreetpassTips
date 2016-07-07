@@ -1,3 +1,5 @@
+$materialize-break-small: 600px;
+
 // Colors
 $coast: #27790c;
 $river: #0c7ba0;
@@ -62,6 +64,12 @@ $deep:  #582e02;
 	}
 }
 
+.s-hide{
+	@media screen and (max-width: $materialize-break-small) {
+		display: none;
+	}
+}
+
 .baitDetail{
 
 	display: table;
@@ -71,6 +79,10 @@ $deep:  #582e02;
 	// Center
 	margin: 0 auto 0 auto;
 
+	@media screen and (max-width: $materialize-break-small) {
+		// Right
+		margin: 0 0 0 auto;
+	}
 
 	.baitRow{
 		display:table-row;
@@ -85,6 +97,9 @@ $deep:  #582e02;
 		&[active=false]{
 			//opacity: 0.3;
 			visibility: hidden;
+			@media screen and (max-width: $materialize-break-small) {
+				display: none;
+			}
 		}
 	}
 

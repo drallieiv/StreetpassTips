@@ -72,7 +72,7 @@ var baits = [
   {id: 'U', color: 'purple', name: 'Starfish', image:"Bait_Purple.png", hexcolor:"#534491"},
   {id: 'b', color: 'light-blue', name: 'Sardine', image:"Bait_LightBlue.png", hexcolor:"#02A4D3"},
   {id: 'B', color: 'blue', name: 'Fossil', image:"Bait_Blue.png", hexcolor:"#02478E"},
-  {id: 'g', color: 'light-green', name: 'Water Flea', image:"Bait_LightGreen.png", hexcolor:"#6B8E23"},
+  {id: 'g', color: 'light-green', name: 'Water Flea', image:"Bait_LightGreen.png", hexcolor:"#6EA523"},
   {id: 'G', color: 'green', name: 'Seaweed', image:"Bait_Green.png", hexcolor:"#016D39"},
   {id: 'O', color: 'orange', name: 'Roe', image:"Bait_Orange.png", hexcolor:"#FF6600"},
   {id: 'Y', color: 'yellow', name: 'Shrimp', image:"Bait_Yellow.png", hexcolor:"#FFD300"},
