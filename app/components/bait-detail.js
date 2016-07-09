@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import {dbFishing}  from './../data/fishing';
 
 export default Ember.Component.extend({
@@ -6,7 +7,7 @@ export default Ember.Component.extend({
 
     var allBaits = dbFishing.getAllBaits();
     var baitDetail = [];
-    allBaits.forEach(function (element, index) {
+    allBaits.forEach(function (element) {
 
       //TODO Search Letter in bais
       var active = (Math.random() > 0.5) ? true : false;
