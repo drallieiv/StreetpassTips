@@ -78,8 +78,8 @@ let spots_raw = [
 ];
 
 let baits_raw = [
-  {id: 'K', color: 'black', name: 'Bug/Larva', image:"Bait_K.png", hexcolor:"#FFFFEE"},
-  {id: 'W', color: 'white', name: 'Crab Claw', image:"Bait_White.png", hexcolor:"#000000"},
+  {id: 'K', color: 'black', name: 'Bug/Larva', image:"Bait_K.png", hexcolor:"#000000"},
+  {id: 'W', color: 'white', name: 'Crab Claw', image:"Bait_White.png", hexcolor:"#FFFFEE"},
   {id: 'N', color: 'brown', name: 'Beetle', image:"Bait_Brown.png", hexcolor:"#6E4826"},
   {id: 'P', color: 'pink', name: 'Seashell', image:"Bait_Pink.png", hexcolor:"#FD5B78"},
   {id: 'U', color: 'purple', name: 'Starfish', image:"Bait_Purple.png", hexcolor:"#534491"},
