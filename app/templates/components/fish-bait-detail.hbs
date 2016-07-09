@@ -1,0 +1,8 @@
+<div class="baitDetail">
+  <div class="baitRow">
+    {{textBait}}
+    {{#each baitDetail as |bait|}}
+      <div class="baitCube" bait="{{bait.id}}" style={{dynamic-bg-color bait.color}} active="{{bait.active}}"></div>
+    {{/each}}
+  </div>
+</div>
