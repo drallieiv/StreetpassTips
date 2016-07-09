@@ -1,5 +1,6 @@
+import Island from 'streetpass-tips/models/island';
 
-var islands = [
+var islands_raw = [
   {id: 'Pre', name: 'Prelude Island', ticket: null, spots_id: ['BeBa','SyRi','CyLa','PDSC']},
   {id: 'Gio', name: 'Giovanna Island', ticket: 'silver', spots_id: ['AriB','FePo','ShLa','CoPi','EmRi']},
   {id: 'Mer', name: 'Mermaid Island', ticket: 'silver', spots_id: ['SaRe','StRo','PaLa','MaPo','MaRi','HiLa']},
@@ -249,7 +250,7 @@ var fishes = [
   {id: 'Bloo', stars:3, name: 'blooper', type:'C' , baits:'KNPR' , points:5000, gold:15000, special:true},
 ];
 
-var islandMap;
+var islands;
 var spotsMap;
 var baitMap;
 var fishMap;
@@ -261,12 +262,13 @@ class DbFishing {
 
     // Prep in Map
     spotsMap = this.arrayToMap(spots);
-    islandMap = this.arrayToMap(islands);
+    islands = this.arrayToMap(islands_raw, Island);
     baitMap = this.arrayToMap(baits);
     fishMap = this.arrayToMap(fishes);
 
+
     // Build Links between island and spots
-    for(var island of islands){
+    for(var island of islands.values()){
       island.spots = [];
       for(let sId of island.spots_id){
         let spot = spotsMap.get(sId);
@@ -300,11 +302,15 @@ class DbFishing {
     }
   }
 
-  arrayToMap(elements){
+  arrayToMap(elements, objectType){
     var eltMap = new Map();
     for(let element of elements){
       if(eltMap.get(element.id) === undefined){
+        if(objectType !== undefined){
+          eltMap.set(element.id, objectType.create(element));
+        }else{
           eltMap.set(element.id, element);
+        }
       }
       else{
         console.error("Duplicate element with Id "+element.id, element, eltMap.get(element.id));
@@ -314,7 +320,7 @@ class DbFishing {
   }
 
   getAllIslands() {
-    return islands;
+    return [...islands.values()];
   }
 
   getAllBaits(){
