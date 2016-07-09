@@ -299,6 +299,21 @@ class DbFishing {
       }
     }
 
+
+    // Build links between fish and baits
+    for(let fish of this.fishs.values()){
+      let baitList = [];
+      for(let baitId of fish.baits.split("")){
+        let bait = this.baits.get(baitId);
+        if(bait !== undefined){
+            baitList.push(bait);
+        }else{
+          console.error("Invalid Link to bait "+baitId);
+        }
+      }
+      fish.set('baits', baitList);
+    }
+
   }
 
   arrayToMap(elements, objectType){
