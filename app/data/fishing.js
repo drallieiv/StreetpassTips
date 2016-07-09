@@ -1,6 +1,9 @@
-import Island from 'streetpass-tips/models/island';
+import Island from 'streetpass-tips/models/fishing/island';
+import Bait from 'streetpass-tips/models/fishing/bait';
+import Spot from 'streetpass-tips/models/fishing/spot';
+import Fish from 'streetpass-tips/models/fishing/fish';
 
-var islands_raw = [
+let islands_raw = [
   {id: 'Pre', name: 'Prelude Island', ticket: null, spots_id: ['BeBa','SyRi','CyLa','PDSC']},
   {id: 'Gio', name: 'Giovanna Island', ticket: 'silver', spots_id: ['AriB','FePo','ShLa','CoPi','EmRi']},
   {id: 'Mer', name: 'Mermaid Island', ticket: 'silver', spots_id: ['SaRe','StRo','PaLa','MaPo','MaRi','HiLa']},
@@ -12,7 +15,7 @@ var islands_raw = [
   {id: 'Mys', name: 'Mysteria Island', ticket: 'gold', spots_id: ['MyDS','SeRi','MaJu','SuRi','EnCa']},
 ];
 
-var spots = [
+let spots_raw = [
   {id: 'BeBa', name: 'Beginniner\'s Bay', type:'C', fish_id:['Sard','BlRo','LaBF','JaSB','BlSB']},
   {id: 'SyRi', name: 'Sylvana River', type:'R', fish_id:['Dace','PaCh','DaCh','RaTr']},
   {id: 'CyLa', name: 'Cypress Lake', type:'L', fish_id:['BlGr','CrCa','CrFi','SmBa']},
@@ -74,7 +77,7 @@ var spots = [
   {id: 'EnCa', name: 'Enigma Cave', type:'C', fish_id:['Stic','GiPi','AlST','SaBi','AfLF','UFO']}
 ];
 
-var baits = [
+let baits_raw = [
   {id: 'K', color: 'black', name: 'Bug/Larva', image:"Bait_K.png", hexcolor:"#FFFFEE"},
   {id: 'W', color: 'white', name: 'Crab Claw', image:"Bait_White.png", hexcolor:"#000000"},
   {id: 'N', color: 'brown', name: 'Beetle', image:"Bait_Brown.png", hexcolor:"#6E4826"},
@@ -89,13 +92,13 @@ var baits = [
   {id: 'R', color: 'red', name: 'Worm', image:"Bait_Red.png", hexcolor:"#FF0c0c"},
 ];
 
-var fishes = [
+let fishes_raw = [
   {id: 'Sard', stars:1, name: 'sardine', type:'C' , baits:'WUbgOR' , points:23, gold:30},
   {id: 'BlRo', stars:1, name: 'black rockfish', type:'C' , baits:'KbBGO' , points:34, gold:50},
   {id: 'LaBF', stars:1, name: 'largescale blackfish', type:'C' , baits:'UbBgO' , points:47, gold:90},
   {id: 'Dace', stars:1, name: 'dace', type:'R' , baits:'UbOR' , points:42, gold:80},
   {id: 'PaCh', stars:1, name: 'pale chub', type:'R' , baits:'NBR' , points:27, gold:70},
-  {id: 'DaCh', stars:1, name: 'dark chub', type:'R' , baits:'PbBG' , points:30, gold:80},
+  {id: 'DaCh', stars:1, name: 'dark chub', type:'R' , baits: 'PbBG' , points:30, gold:80},
   {id: 'BlGr', stars:1, name: 'bluegill', type:'L' , baits:'KUbB' , points:32, gold:80},
   {id: 'CrCa', stars:1, name: 'crucian carp', type:'L' , baits:'bBOR' , points:28, gold:40},
   {id: 'CrFi', stars:1, name: 'crayfish', type:'L' , baits:'WbgYR' , points:21, gold:60},
@@ -250,44 +253,38 @@ var fishes = [
   {id: 'Bloo', stars:3, name: 'blooper', type:'C' , baits:'KNPR' , points:5000, gold:15000, special:true},
 ];
 
-var islands;
-var spotsMap;
-var baitMap;
-var fishMap;
-
 class DbFishing {
 
   constructor(){
     console.log("Init Fishing DB");
 
     // Prep in Map
-    spotsMap = this.arrayToMap(spots);
-    islands = this.arrayToMap(islands_raw, Island);
-    baitMap = this.arrayToMap(baits);
-    fishMap = this.arrayToMap(fishes);
-
+    this.spots = this.arrayToMap(spots_raw, Spot);
+    this.islands = this.arrayToMap(islands_raw, Island);
+    this.baits = this.arrayToMap(baits_raw, Bait);
+    this.fishs = this.arrayToMap(fishes_raw, Fish);
 
     // Build Links between island and spots
-    for(var island of islands.values()){
+    for(var island of this.islands.values()){
       island.spots = [];
       for(let sId of island.spots_id){
-        let spot = spotsMap.get(sId);
+        let spot = this.spots.get(sId);
         if(spot !== undefined){
           island.spots.push(spot);
           spot.island = island;
         }else{
           console.error("Invalid Link to spot "+sId);
         }
-
       }
+      delete island.spots_id;
     }
 
     // Build Links between spots and fishes
-    for(let spot of spots){
+    for(let spot of this.spots.values()){
       spot.fish = [];
       if(spot.fish_id !== undefined){
         for(let fishId of spot.fish_id){
-          let fish = fishMap.get(fishId);
+          let fish = this.fishs.get(fishId);
           if(fish !== undefined){
             spot.fish.push(fish);
             if(fish.spot === undefined){
@@ -298,8 +295,10 @@ class DbFishing {
             console.error("Invalid Link to fish "+fishId);
           }
         }
+        delete spot.fish_id;
       }
     }
+
   }
 
   arrayToMap(elements, objectType){
@@ -320,11 +319,11 @@ class DbFishing {
   }
 
   getAllIslands() {
-    return [...islands.values()];
+    return [...this.islands.values()];
   }
 
   getAllBaits(){
-    return baits;
+    return [...this.baits.values()];
   }
 
 }
